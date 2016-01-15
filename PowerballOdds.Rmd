@@ -1,0 +1,52 @@
+---
+title: "How To Compute The Odds of Powerball"
+author: "Tony Jiang"
+date: "January 15, 2016"
+output: html_document
+---
+Powerball odds and probabilities for the Powerball Jackpot – and how to calculate these Powerball odds. Additional calculations show tie probabilities and expected return on your “investment”.
+
+Updated for the 69/26 Game
+
+Concise Table of Powerball Odds (Mathematical derivation below)
+```
+Ticket Matches       Payout           Odds               Probability
+--------------------------------------------------------------------
+5 White + PB        Jackpot    1 in 292,201,338.00      0.000000003422 
+5 White No PB     1,000,000    1 in 11,688,053.52       0.00000008556
+4 White + PB         50,000    1 in 913,129.18          0.000001095
+4 White No PB           100    1 in 36,525.17           0.00002738
+3 White + PB            100    1 in 14,494.11           0.00006899
+3 White No PB             7    1 in 579.76              0.001725
+2 White + PB              7    1 in 701.33              0.001426
+1 White + PB              4    1 in 91.98               0.01087
+0 White + PB              4    1 in 38.32               0.02609
+
+Win something      Variable    1 in 24.87               0.0402
+```
+##Game Rules
+   The numbers picked for the prizes consist of 5 white balls picked at random from a drum that holds 69 balls numbered from 1 to 69. The Powerball number is a single ball that is picked from a second drum that has 26 numbers ranging from 1 to 26. If the results of these random number selections match one of the winning combinations on your lottery ticket, then you win something.
+
+   You can also buy a “Power Play” option. The multipliers in the 69/26 Power Play game increase the payout amounts for the non-jackpot prizes as shown in the “Power Play Option” section. (Scroll down the page.)
+
+  In the game version that began as of Jan. 15, 2016, it costs $2 to buy a ticket instead of the previous $1. The Power Play option costs another $1; and as noted above, the payout amounts have been changed.
+
+Before we start computing the odds and probability, you need to know some basics of combination in pick n balls from m balls. That is, you should know how to compute how many ways to choose n(n<=m) balls form a pool of m balls. Imagine we pick one ball at a time, we have m ways to choose the first ball, then m-1 ways to choose the second, m-2 ways for the third ... so we end up with m*(m-1)*(m-2)*(m-3)..(m-n) ways. This can be easily expressed in factorial format m!/(m-n)!. But, wait,the order of the five numbers does not matter. For each five-number, there are 5! ways to rearrange the order, so we in fact count the same ticket for n! ways. The botoom of line is, there are in fact m!/((m-n)!*n!).
+In the case of Powerball, there are total 69!/(64!*5!) ways to choose the 5 white balls and 26!/(25!*1!) ways to choose the power number. And that final number is 292,201,338. Just keep that in mind as we need this number for the computation. Let's call it T. 
+##Total how many different ticket we can have
+This is the same as how many ways we can pick the 5+1 numbers for a ticket.
+```{r,echo=TRUE}
+factorial(69)/(factorial(64)*factorial(5))*26
+```
+Alternatively, we can use choose() function from R to compute it.
+```{r,echo=TRUE}
+choose(69,5)*choose(26,1)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
